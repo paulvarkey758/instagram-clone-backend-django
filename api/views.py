@@ -55,9 +55,6 @@ def fetchProfile(request,tkn):
 
 @api_view(['GET'])
 def fetchFeed(request):
-    feeds=Post.objects.all()
-    for i in feeds:
-        print(i.location)
-        print(i.user.name)
+    feeds=Post.objects.all().order_by('-posted_at')
     serializer=PostSerializer(feeds,many=True)
     return Response(serializer.data)

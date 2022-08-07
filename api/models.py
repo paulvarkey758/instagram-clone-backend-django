@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 
 # Create your models here.
@@ -18,5 +19,7 @@ class Post(models.Model):
     location=models.CharField(max_length=20,blank=True,null=True)
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)  
     post=models.ImageField(upload_to="post/")  
-    comment=models.TextField(blank=True,null=True)
+    caption=models.TextField(blank=True,null=True)
+    posted_at=models.DateTimeField(default=datetime.now)
+
     
