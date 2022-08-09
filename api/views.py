@@ -43,7 +43,18 @@ def showData(request):
     users=CustomUser.objects.all()
     print(users[0].password)
     serializer=CustomUserSerializer(users, many=True) 
-    return Response(serializer.data)      
+    return Response(serializer.data) 
+
+@api_view(['PUT'])
+@parser_classes([FormParser,MultiPartParser])
+def updateProfile(request,tkn):
+    user=CustomUser.objects.get(token=tkn)
+    serializer=CustomUserSerializer(instance=user.id,data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    else:
+        return Response("profile updating serializer is not valid")    
 
 
 ##################### post section
